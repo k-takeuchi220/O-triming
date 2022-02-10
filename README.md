@@ -35,3 +35,5 @@ Mac環境を想定しています。
 
 <img width="1025" alt="o-triming4" src="https://user-images.githubusercontent.com/42257421/132041574-ff1328e2-c00f-42f9-8475-e7db7bbb3168.png">
 「make」フォルダ内には、同名で変換後のファイルが格納されています。
+
+※ m1の場合は、soxコマンド実行箇所を「/opt/homebrew/bin/sox」に置き換える必要があります。
