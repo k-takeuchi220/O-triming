@@ -6,6 +6,32 @@ currentdir=$(cd $(dirname $0); pwd)
 env=$currentdir/.env
 . $env
 
+# install sox
+if ! which /usr/local/bin/sox >/dev/null 2>&1; then
+    isInstall=$(osascript -e "display dialog \"初回起動のようです。\\n必要なソフトウェアをインストールしますか？\" buttons {\"Cancel\",\"OK\"} default button 2")
+    case $isInstall in
+        'button returned:Cancel' ) exit ;;
+        'button returned:OK' )
+            osascript -e "do shell script \"sudo ${currentdir}/Install.sh &\" with administrator privileges"
+
+            while [ ! -f "${currentdir}/completed" ]; do
+                sleep 1
+            done
+
+            install_result=$?
+            if [ $install_result -eq 0 ]; then
+                isContinue=$(osascript -e "display dialog \"インストールが完了しました。\\n処理を続行しますか？\" buttons {\"Cancel\",\"OK\"} default button 2")
+                case $isContinue in
+                    'button returned:Cancel' ) exit
+                esac
+            else
+                osascript -e "display dialog \"インストールに失敗しました。\""
+                exit 1
+            fi
+            ;;
+    esac
+fi
+
 # setting
 setting="\n
 開始秒数： ${START_SECOND}
