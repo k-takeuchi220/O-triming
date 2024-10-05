@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 currentdir=$(cd $(dirname $0); pwd)
 
@@ -59,9 +59,10 @@ fi
 
 select=$(osascript -e 'set theOutputFolder to choose folder with prompt "編集する音声ファイルが入ったフォルダを選択"')
 # todo: warning
-if [ !$select ]; then
-    exit
-fi
+# echo $select >> $currentdir/log.txt
+# if [ -z "$select" ]; then
+#     exit
+# fi
 
 # convert posix to path
 IFS_ORIGINAL="$IFS"
@@ -91,7 +92,7 @@ for file in `\find $workdir -maxdepth 1 -name '*.mp3' -or -name '*.wav' -type f 
 done
 
 # delete tmp file
-rm -fr $tmpdir
+# rm -fr $tmpdir
 
 # notify
 osascript -e "display notification \"音声ファイル生成完了\" with title \"o-triming\""
